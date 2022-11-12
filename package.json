@@ -72,6 +72,7 @@
     "core-js": "^3.6.5",
     "flyio": "^0.6.2",
     "regenerator-runtime": "^0.12.1",
+    "uview-ui": "^2.0.31",
     "vue": "^2.6.11",
     "vuex": "^3.2.0"
   },
@@ -92,10 +93,18 @@
     "@vue/cli-service": "~4.5.19",
     "babel-plugin-import": "^1.11.0",
     "cross-env": "^7.0.2",
+    "eslint": "^8.22.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.5.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-vue": "^9.7.0",
     "jest": "^25.4.0",
     "mini-types": "*",
     "miniprogram-api-typings": "*",
     "postcss-comment": "^2.0.0",
+    "sass": "^1.55.0",
+    "sass-loader": "^10.3.1",
     "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [
