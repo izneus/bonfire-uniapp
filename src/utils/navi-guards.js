@@ -1,4 +1,4 @@
-const { getTokenSync } = require('@/utils/auth')
+const { getTokenSync, removeTokenSync } = require('@/utils/auth')
 
 module.exports = (vm) => {
   const whiteList = ['/', '/pages/login/index', '/auth-redirect'] // no redirect whitelist
@@ -22,7 +22,16 @@ module.exports = (vm) => {
             if (hasUsername) {
               // todo
             } else {
-              vm.$store.dispatch('user/getInfo')
+              // todo 获取/清空权限信息，有待改进，这里要用await发store.dispatch
+              try {
+                // todo 需要await
+                vm.$store.dispatch('user/getInfo')
+              } catch (e) {
+                // reset Token,去login
+                // todo 需要await
+                removeTokenSync()
+                uni.navigateTo({ url: '/pages/login/index' })
+              }
             }
           }
         } else {
