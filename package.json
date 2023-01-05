@@ -70,6 +70,7 @@
     "@dcloudio/uni-stat": "^2.0.1-alpha-36820221027001",
     "@vue/shared": "^3.0.0",
     "core-js": "^3.6.5",
+    "dingtalk-jsapi": "^3.0.12",
     "flyio": "^0.6.2",
     "regenerator-runtime": "^0.12.1",
     "uview-ui": "^2.0.31",

@@ -1,5 +1,6 @@
 import { getTokenSync, removeTokenSync, setTokenSync } from '@/utils/auth'
 import { getInfo, login, logout } from '@/api/login'
+import { ddLogin } from '@/api/dingtalk'
 
 const state = {
   token: getTokenSync(),
@@ -16,6 +17,7 @@ const mutations = {
 }
 
 const actions = {
+
   login ({ commit }, userInfo) {
     // const { username, password } = userInfo
     return new Promise((resolve, reject) => {
@@ -29,6 +31,20 @@ const actions = {
       })
     })
   },
+
+  ddLogin ({ commit }, code) {
+    return new Promise((resolve, reject) => {
+      ddLogin({ code }).then(response => {
+        const { data } = response
+        commit('SET_TOKEN', data.token)
+        setTokenSync(data.token)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
   logout ({ commit, state, dispatch }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
@@ -40,12 +56,13 @@ const actions = {
       })
     })
   },
+
   getInfo ({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo().then(response => {
         const { data } = response
         if (!data) {
-          reject('Verification failed, please Login again.')
+          reject(new Error('Verification failed, please Login again.'))
         }
         const { username } = data
         commit('SET_NAME', username)
@@ -55,6 +72,7 @@ const actions = {
       })
     })
   }
+
 }
 
 const getters = {

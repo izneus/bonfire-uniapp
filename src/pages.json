@@ -26,6 +26,12 @@
       "style": {
         "navigationBarTitleText": "我的"
       }
+    },
+    {
+      "path": "pages/demo/dingtalk",
+      "style": {
+        "navigationBarTitleText": "钉钉"
+      }
     }
   ],
   "globalStyle": {
@@ -66,6 +72,17 @@
       {
         "pagePath": "pages/me/index",
         "text": "我的",
+        "iconfont": {
+          "text": "\uE78b",
+          "selectedText": "\uE78b",
+          "fontSize": "24px",
+          "color": "#909399",
+          "selectedColor": "#3c9cff"
+        }
+      },
+      {
+        "pagePath": "pages/demo/dingtalk",
+        "text": "钉钉",
         "iconfont": {
           "text": "\uE78b",
           "selectedText": "\uE78b",

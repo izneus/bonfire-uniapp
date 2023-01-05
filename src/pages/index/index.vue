@@ -1,3 +1,4 @@
+<!--todo uniapp自带的tab导航，在钉钉环境下比较卡，在苹果设备上，字号过大容易错行,计划换成uview的tab组件-->
 <template>
   <view class="demo">
     首页演示

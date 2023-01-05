@@ -65,12 +65,17 @@
       :loading="loading.login"
       @click="handleLogin"
     />
+    <u-loading-page
+      :loading="loading.page"
+      :loading-text="pageLoadingText"
+    />
   </view>
 </template>
 
 <script>
 import { getCaptcha } from '@/api/login'
 import { REG_PASSWORD, REG_USERNAME } from '@/common/constant/reg-exp'
+import * as dd from 'dingtalk-jsapi'
 
 export default {
   name: 'LoginPage',
@@ -84,8 +89,10 @@ export default {
       },
       captchaImage: null,
       loading: {
-        login: false
+        login: false,
+        page: false
       },
+      pageLoadingText: null,
       rules: {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -106,6 +113,28 @@ export default {
   onReady () {
     // 如果需要兼容微信小程序，并且校验规则中含有方法等，只能通过setRules方法设置规则。
     this.$refs.loginForm.setRules(this.rules)
+
+    // 钉钉环境执行免登
+    if (dd.env.platform === 'notInDingTalk') {
+      // 非钉钉环境
+    } else {
+      // 钉钉环境
+      this.loading.page = true
+      this.pageLoadingText = '钉钉登录中'
+      dd.ready(() => {
+        dd.runtime.permission.requestAuthCode({
+          corpId: 'CORP_ID',
+          onSuccess: info => {
+            this.$store.dispatch('user/ddLogin', info.code).then(() => {
+              uni.switchTab({ url: '/' })
+            })
+          },
+          onFail: function (err) {
+            alert('requestAuthCode error: ' + JSON.stringify(err))
+          }
+        })
+      })
+    }
   },
   methods: {
     setCaptchaImage () {
@@ -116,21 +145,12 @@ export default {
     },
     handleLogin () {
       this.$refs.loginForm.validate().then(() => {
-        // uni.$u.toast('校验通过')
         this.loading.login = true
-        // login(this.query).then(resp => {
-        //   setTokenSync(resp.data.token)
-        //   uni.switchTab({url: '/'})
-        // }).finally(() => {
-        //   this.loading.login = false
-        // })
         this.$store.dispatch('user/login', this.query).then(() => {
           uni.switchTab({ url: '/' })
         }).finally(() => {
           this.loading.login = false
         })
-      }).catch(errors => {
-        // uni.$u.toast('校验失败')
       })
     }
   }
